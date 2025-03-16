@@ -188,28 +188,85 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable[]>`
-      SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        invoices.status,
-        customers.name,
-        customers.email,
-        customers.image_url
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+    // const invoices = await sql<InvoicesTable[]>`
+    //   SELECT
+    //     invoices.id,
+    //     invoices.amount,
+    //     invoices.date,
+    //     invoices.status,
+    //     customers.name,
+    //     customers.email,
+    //     customers.image_url
+    //   FROM invoices
+    //   JOIN customers ON invoices.customer_id = customers.id
+    //   WHERE
+    //     customers.name ILIKE ${`%${query}%`} OR
+    //     customers.email ILIKE ${`%${query}%`} OR
+    //     invoices.amount::text ILIKE ${`%${query}%`} OR
+    //     invoices.date::text ILIKE ${`%${query}%`} OR
+    //     invoices.status ILIKE ${`%${query}%`}
+    //   ORDER BY invoices.date DESC
+    //   LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    // `;
 
-    return invoices;
+    const invoices: InvoicesTable[] = [
+      {
+        id: "18hf74",
+        customer_id: "1e9djs",
+        name: "Delba de Oliveira",
+        email: "oliveira@example.com",
+        image_url: "/customers/delba-de-oliveira.png",
+        date: "Sun Mar 01 2025 20:21:59 GMT+0000 (Greenwich Mean Time)",
+        amount: 8945,
+        status: "pending",
+      },
+      {
+        id: "d384h4",
+        customer_id: "1e9djs",
+        name: "Amy Burns",
+        image_url: "/customers/amy-burns.png",
+        email: "oliveira@example.com",
+        date: "Sun Mar 01 2025 20:21:59 GMT+0000 (Greenwich Mean Time)",
+        amount: 22745,
+        status: "pending",
+      },
+      {
+        id: "4jd87akq",
+        customer_id: "1e9djs",
+        name: "Balazs Orban",
+        image_url: "/customers/balazs-orban.png",
+        email: "balazs-orban@example.com",
+        date: "Sun Mar 08 2025 20:21:59 GMT+0000 (Greenwich Mean Time)",
+        amount: 545,
+        status: "paid",
+      },
+      {
+        id: "j38dj",
+        customer_id: "1e9djs",
+        name: "Evil Rabbit",
+        image_url: "/customers/evil-rabbit.png",
+        email: "evil-rabbit@example.com",
+        date: "Sun Mar 10 2025 20:21:59 GMT+0000 (Greenwich Mean Time)",
+        amount: 1945,
+        status: "pending",
+      },
+      {
+        id: "dj39das",
+        customer_id: "1e9djs",
+        name: "Lee Robinson",
+        image_url: "/customers/lee-robinson.png",
+        email: "lee-robinson@example.com",
+        date: "Sun Mar 11 2025 20:21:59 GMT+0000 (Greenwich Mean Time)",
+        amount: 83345,
+        status: "paid",
+      },
+    ];
+
+    return query.length > 0
+      ? invoices.filter((invoice) =>
+          invoice.name.toLowerCase().includes(query.toLowerCase())
+        )
+      : invoices;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch invoices.");
