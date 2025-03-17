@@ -92,35 +92,35 @@ export async function fetchLatestInvoices() {
 
     const data = [
       {
-        id: "18hf74",
+        id: "1",
         name: "Delba de Oliveira",
         image_url: "/customers/delba-de-oliveira.png",
         email: "oliveira@example.com",
         amount: 8945,
       },
       {
-        id: "d384h4",
+        id: "2",
         name: "Amy Burns",
         image_url: "/customers/amy-burns.png",
         email: "oliveira@example.com",
         amount: 22745,
       },
       {
-        id: "4jd87akq",
+        id: "3",
         name: "Balazs Orban",
         image_url: "/customers/balazs-orban.png",
         email: "balazs-orban@example.com",
         amount: 545,
       },
       {
-        id: "j38dj",
+        id: "4",
         name: "Evil Rabbit",
         image_url: "/customers/evil-rabbit.png",
         email: "evil-rabbit@example.com",
         amount: 1945,
       },
       {
-        id: "dj39das",
+        id: "5",
         name: "Lee Robinson",
         image_url: "/customers/lee-robinson.png",
         email: "lee-robinson@example.com",
@@ -184,7 +184,7 @@ const ITEMS_PER_PAGE = 6;
 const invoices: InvoicesTable[] = [
   {
     id: "18hf74",
-    customer_id: "1e9djs",
+    customer_id: "1",
     name: "Delba de Oliveira",
     email: "oliveira@example.com",
     image_url: "/customers/delba-de-oliveira.png",
@@ -194,7 +194,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "d384h4",
-    customer_id: "1e9djs",
+    customer_id: "2",
     name: "Amy Burns",
     image_url: "/customers/amy-burns.png",
     email: "amy-burns@example.com",
@@ -204,7 +204,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "4jd87akq",
-    customer_id: "1e9djs",
+    customer_id: "3",
     name: "Balazs Orban",
     image_url: "/customers/balazs-orban.png",
     email: "balazs-orban@example.com",
@@ -214,7 +214,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "j38dj",
-    customer_id: "1e9djs",
+    customer_id: "4",
     name: "Evil Rabbit",
     image_url: "/customers/evil-rabbit.png",
     email: "evil-rabbit@example.com",
@@ -224,7 +224,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "dj39das",
-    customer_id: "1e9djs",
+    customer_id: "5",
     name: "Lee Robinson",
     image_url: "/customers/lee-robinson.png",
     email: "lee-robinson@example.com",
@@ -234,7 +234,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "28hf74",
-    customer_id: "1e9djs",
+    customer_id: "1",
     name: "Delba de Oliveira",
     email: "oliveira@example.com",
     image_url: "/customers/delba-de-oliveira.png",
@@ -244,7 +244,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "2384h4",
-    customer_id: "1e9djs",
+    customer_id: "2",
     name: "Amy Burns",
     image_url: "/customers/amy-burns.png",
     email: "amy-burns@example.com",
@@ -254,7 +254,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "2jd87akq",
-    customer_id: "1e9djs",
+    customer_id: "3",
     name: "Balazs Orban",
     image_url: "/customers/balazs-orban.png",
     email: "balazs-orban@example.com",
@@ -264,7 +264,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "238dj",
-    customer_id: "1e9djs",
+    customer_id: "4",
     name: "Evil Rabbit",
     image_url: "/customers/evil-rabbit.png",
     email: "evil-rabbit@example.com",
@@ -274,7 +274,7 @@ const invoices: InvoicesTable[] = [
   },
   {
     id: "2j39das",
-    customer_id: "1e9djs",
+    customer_id: "5",
     name: "Lee Robinson",
     image_url: "/customers/lee-robinson.png",
     email: "lee-robinson@example.com",
@@ -351,15 +351,18 @@ export async function fetchInvoicesPages(query: string) {
 
 export async function fetchInvoiceById(id: string) {
   try {
-    const data = await sql<InvoiceForm[]>`
-      SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
-    `;
+    // const data = await sql<InvoiceForm[]>`
+    //   SELECT
+    //     invoices.id,
+    //     invoices.customer_id,
+    //     invoices.amount,
+    //     invoices.status
+    //   FROM invoices
+    //   WHERE invoices.id = ${id};
+    // `;
+
+    // Mimic database founding item
+    const data = invoices.filter((invoice) => invoice.id === id);
 
     const invoice = data.map((invoice) => ({
       ...invoice,
@@ -376,15 +379,42 @@ export async function fetchInvoiceById(id: string) {
 
 export async function fetchCustomers() {
   try {
-    const customers = await sql<CustomerField[]>`
-      SELECT
-        id,
-        name
-      FROM customers
-      ORDER BY name ASC
-    `;
+    // const customers = await sql<CustomerField[]>`
+    //   SELECT
+    //     id,
+    //     name
+    //   FROM customers
+    //   ORDER BY name ASC
+    // `;
+    const customers = [
+      {
+        id: "1",
+        name: "Delba de Oliveira",
+      },
+      {
+        id: "2",
+        name: "Amy Burns",
+      },
+      {
+        id: "3",
+        name: "Balazs Orban",
+      },
+      {
+        id: "4",
+        name: "Evil Rabbit",
+      },
+      {
+        id: "5",
+        name: "Lee Robinson",
+      },
+    ];
 
-    return customers;
+    // Mock sorted data
+    const result = customers.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+
+    return result;
   } catch (err) {
     console.error("Database Error:", err);
     throw new Error("Failed to fetch all customers.");
